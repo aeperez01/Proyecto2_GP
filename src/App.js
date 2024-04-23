@@ -1,73 +1,131 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import IngresarData from './componentes.js';
 
 function App() {
-  const [ProductoActual,SetProductoActual]=useState({
-    fecha:'',
-    producto:'',
-    precio:'',
-    categoria:''
-  });
+  const [tab, setTab] = useState(1);
+  const [productos, setProductos] = useState([]);
+  const [inventario, setInventario] = useState([]);
 
-  const [productos,setProductos]=useState([]);
-
-  const mantenerCambio = (event) => {
-    const {name,value} = event.target;
-    SetProductoActual(prev => ({
-      ...prev,
-      [name]:value
-    }));
+  const handleTabChange = (newTab) => {
+    setTab(newTab);
   };
 
-  const agregarProducto = () => {
-    var nvafecha=new Date().toLocaleDateString();
+  const handleAgregarProducto = (producto) => {
+    setProductos([...productos, producto]);
+  };
 
-    const productoActualFecha = {
-      ...ProductoActual,fecha: nvafecha
-    };
+  const handleRegistrarEntradaSalida = (entradaSalida) => {
+    const nuevoInventario = [...inventario];
+    const productoIndex = nuevoInventario.findIndex(item => item.id === entradaSalida.productoId);
 
-    setProductos(prev => [...prev, productoActualFecha]);
+    if (productoIndex !== -1) {
+      if (entradaSalida.tipo === 'entrada') {
+        nuevoInventario[productoIndex].cantidad += entradaSalida.cantidad;
+      } else {
+        nuevoInventario[productoIndex].cantidad -= entradaSalida.cantidad;
+      }
+    }
 
-    SetProductoActual({
-      fecha:'',
-      producto:'',
-      precio:'',
-      categoria:''
-    });
-  }
+    setInventario(nuevoInventario);
+  };
 
   return (
+    <div>
+      <div className="tabs">
+        <button onClick={() => handleTabChange(1)}>Captura de Productos</button>
+        <button onClick={() => handleTabChange(2)}>Inventario</button>
+        <button onClick={() => handleTabChange(3)}>Registro de Entradas/Salidas</button>
+      </div>
 
-    <>
-<body>
-  <div className='menu'>
-    <button>Captura de productos</button>
-    <button>Inventario</button>
-  </div>
-  <div className='form'>
-  <h1>Formulario de ingreso</h1>
-  <p>Por favor, ingrese los siguientes datos para poder actualizar el inventario.</p>
-  <IngresarData className='inputPersonalizado' etiqueta='Nombre de producto' nombre='producto' value={ProductoActual.producto} onChange={mantenerCambio} type='text'></IngresarData>
-  <IngresarData className='inputPersonalizado' etiqueta='Precio unitario' nombre='precio' value={ProductoActual.precio} onChange={mantenerCambio} type='text'></IngresarData>
-  <IngresarData className='inputPersonalizado' etiqueta='Categoria' nombre='categoria' value={ProductoActual.categoria} onChange={mantenerCambio} type='text'></IngresarData>
-  <button className='btnGuardar' onClick={agregarProducto}>Guardar</button>
-  </div>
-  <ul className='lista'>
-  {productos.map((producto, index) => (
-    <li key={index}>{`Fecha de captura: ${producto.fecha} | Producto: ${producto.producto} | Precio: \$${producto.precio} | Categoria: ${producto.categoria}`}</li>
-      ))}
-  </ul>
+      <div className="tab-content">
+        {tab === 1 && <CapturaProductosTab productos={productos} onAgregarProducto={handleAgregarProducto} />}
+        {tab === 2 && <InventarioTab inventario={inventario} />}
+        {tab === 3 && <RegistroEntradasSalidasTab productos={productos} onRegistrarEntradaSalida={handleRegistrarEntradaSalida} />}
+      </div>
+    </div>
+  );
+}
 
-  <div className='Existencias'>
-    <h1>Control de inventario</h1>
+function CapturaProductosTab({ productos, onAgregarProducto }) {
+  const [nombreProducto, setNombreProducto] = useState('');
+  const [precioProducto, setPrecioProducto] = useState('');
 
-  </div>
-</body>
-</>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const nuevoProducto = {
+      id: productos.length + 1,
+      nombre: nombreProducto,
+      precio: precioProducto,
+    };
+    onAgregarProducto(nuevoProducto);
+    setNombreProducto('');
+    setPrecioProducto('');
+  };
 
+  return (
+    <div>
+      <h2>Captura de Productos</h2>
+      <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="Nombre del Producto" value={nombreProducto} onChange={(e) => setNombreProducto(e.target.value)} />
+        <input type="text" placeholder="Precio del Producto" value={precioProducto} onChange={(e) => setPrecioProducto(e.target.value)} />
+        <button type="submit">Agregar Producto</button>
+      </form>
+    </div>
+  );
+}
+
+function InventarioTab({ inventario }) {
+  return (
+    <div>
+      <h2>Inventario</h2>
+      <ul>
+        {inventario.map((producto) => (
+          <li key={producto.id}>
+            {producto.nombre} - Cantidad: {producto.cantidad}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function RegistroEntradasSalidasTab({ productos, onRegistrarEntradaSalida }) {
+  const [productoId, setProductoId] = useState('');
+  const [tipo, setTipo] = useState('entrada');
+  const [cantidad, setCantidad] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const entradaSalida = {
+      productoId: parseInt(productoId),
+      tipo,
+      cantidad: parseInt(cantidad),
+    };
+    onRegistrarEntradaSalida(entradaSalida);
+    setProductoId('');
+    setTipo('entrada');
+    setCantidad('');
+  };
+
+  return (
+    <div>
+      <h2>Registro de Entradas/Salidas</h2>
+      <form onSubmit={handleSubmit}>
+        <select value={productoId} onChange={(e) => setProductoId(e.target.value)}>
+          <option value="">Selecciona un Producto</option>
+          {productos.map((producto) => (
+            <option key={producto.id} value={producto.id}>{producto.nombre}</option>
+          ))}
+        </select>
+        <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
+          <option value="entrada">Entrada</option>
+          <option value="salida">Salida</option>
+        </select>
+        <input type="number" placeholder="Cantidad" value={cantidad} onChange={(e) => setCantidad(e.target.value)} />
+        <button type="submit">Registrar Entrada/Salida</button>
+      </form>
+    </div>
   );
 }
 
 export default App;
+
