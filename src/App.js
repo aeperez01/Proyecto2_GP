@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import './App.css'
 
 function App() {
+
   const [tab, setTab] = useState(1);
   const [productos, setProductos] = useState([]);
   const [inventario, setInventario] = useState([]);
@@ -11,6 +13,7 @@ function App() {
 
   const handleAgregarProducto = (producto) => {
     setProductos([...productos, producto]);
+    setInventario([...inventario, { id: producto.id, nombre: producto.nombre, cantidad: 0 }]);
   };
 
   const handleRegistrarEntradaSalida = (entradaSalida) => {
@@ -62,7 +65,7 @@ function CapturaProductosTab({ productos, onAgregarProducto }) {
   };
 
   return (
-    <div>
+    <div id='captura'>
       <h2>Captura de Productos</h2>
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Nombre del Producto" value={nombreProducto} onChange={(e) => setNombreProducto(e.target.value)} />
@@ -75,7 +78,7 @@ function CapturaProductosTab({ productos, onAgregarProducto }) {
 
 function InventarioTab({ inventario }) {
   return (
-    <div>
+    <div id='inventario'>
       <h2>Inventario</h2>
       <ul>
         {inventario.map((producto) => (
@@ -107,7 +110,7 @@ function RegistroEntradasSalidasTab({ productos, onRegistrarEntradaSalida }) {
   };
 
   return (
-    <div>
+    <div id='registro'>
       <h2>Registro de Entradas/Salidas</h2>
       <form onSubmit={handleSubmit}>
         <select value={productoId} onChange={(e) => setProductoId(e.target.value)}>
@@ -128,4 +131,3 @@ function RegistroEntradasSalidasTab({ productos, onRegistrarEntradaSalida }) {
 }
 
 export default App;
-
