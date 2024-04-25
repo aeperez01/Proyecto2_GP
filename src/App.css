@@ -1,97 +1,39 @@
-*{
+* {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+
 }
 
-.menu{
-  display: inline-block;
+.tabs {
   background-color: greenyellow;
-  width: 100%;
-  height: 40px;
+  height: 50px;
+  border-bottom: 5px;
+  border-color: gray;
+  border-style: solid;
+  align-content: center;
 }
 
-.menu button{
-  margin: 0.25% 0;
-  height: 80%;
-  width: auto;
+.tabs button{
   background-color: greenyellow;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0 5px;
+  padding: 0 5px 0 0;
+  height: 45px;
+  text-decoration: underline;
+
   border-top: 0;
   border-bottom: 0;
   border-left: 0;
-  border-color: rgb(244, 243, 243);
-  border-style:solid;
-  border-radius: 1%;
-  padding: 0 5px;
-  color: rgb(244, 243, 243);
-  font-weight: bold;
-  font-size: larger;
+  border-right: 2px;
+  border-radius: 2px;
+  border-style:dashed;
+  border-color: white;
 }
 
-.form {
-  text-align: center;
-  margin: 5% 0;
-}
-
-.form h1{
-  color: green;
-}
-
-.form p{
-  color: rgb(56, 56, 56);
-  font-weight: bold;
-
-}
-
-.inputPersonalizado {
-  margin: 2% 0;
-  width: 30%;
-  text-align: right;
-  display: block;
-  position: relative;
-  left: 30%;
-  
-}
-
-.inputPersonalizado input{
-margin: 0 5px;
-background-color: rgb(238, 238, 238);
-border: 0;
-border-radius: 5px;
-height: 20px;
-
-}
-
-.inputPersonalizado label{
-  color: rgb(56, 56, 56);
-  text-decoration: underline;
-}
-
-.btnGuardar {
-  background-color: white;
-  color: green;
-  border-color: green;
-  border-radius: 3px;
-  padding: 4px;
-}
-
-.lista{
-  text-align: center;
-  color: green;
-  font-weight: bold;
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.lista li{
-  text-decoration: underline;
-  
-}
-
-.lista li:hover{
-  background-color: green;
-  color: white;
-}
-
-.menu button :hover{
-  text-decoration: underline;
+#captura {
+  background-color: whitesmoke;
+  height: 100px;
 }
