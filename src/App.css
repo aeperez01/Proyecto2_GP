@@ -34,6 +34,38 @@
 }
 
 #captura {
-  background-color: whitesmoke;
-  height: 100px;
+text-align: center;
 }
+
+#captura form{
+  display: inline-block;
+
+}
+
+#captura div{
+display: flex;
+width: 100%;
+margin: 7% 0;
+}
+
+#captura div p{
+  padding: 0 5px;
+  text-decoration: underline;
+  font-family: sans-serif;
+  color: rgb(60, 60, 60);
+}
+
+#captura div input{
+  border-radius: 6%;
+  border-style: none;
+  background-color: gainsboro;
+}
+
+#captura button{
+  background-color: white;
+  color: green;
+  border-color: green;
+  padding: 3px;
+  border-radius: 5%;
+}
+
