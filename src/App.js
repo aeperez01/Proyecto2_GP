@@ -66,10 +66,11 @@ function CapturaProductosTab({ productos, onAgregarProducto }) {
 
   return (
     <div id='captura'>
+      <br/>
       <h2>Captura de Productos</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Nombre del Producto" value={nombreProducto} onChange={(e) => setNombreProducto(e.target.value)} />
-        <input type="text" placeholder="Precio del Producto" value={precioProducto} onChange={(e) => setPrecioProducto(e.target.value)} />
+        <div><p>Nombre del producto</p><input type="text" value={nombreProducto} onChange={(e) => setNombreProducto(e.target.value)} /></div>
+        <div><p>Precio del producto</p><input type="text" value={precioProducto} onChange={(e) => setPrecioProducto(e.target.value)} /></div>
         <button type="submit">Agregar Producto</button>
       </form>
     </div>
