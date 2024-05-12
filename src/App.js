@@ -81,13 +81,22 @@ function InventarioTab({ inventario }) {
   return (
     <div id='inventario'>
       <h2>Inventario</h2>
-      <ul>
+      <table>
+        <tr>
+          <th>ID de producto</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+        </tr>
         {inventario.map((producto) => (
-          <li key={producto.id}>
-            {producto.nombre} - Cantidad: {producto.cantidad}
-          </li>
+
+          <tr key={producto.id}>
+            <td>{producto.id}</td>
+            <td>{producto.nombre}</td>
+            <td>{producto.cantidad}</td>
+          </tr>
+
         ))}
-      </ul>
+      </table>
     </div>
   );
 }
@@ -112,19 +121,27 @@ function RegistroEntradasSalidasTab({ productos, onRegistrarEntradaSalida }) {
 
   return (
     <div id='registro'>
+      <br/>
       <h2>Registro de Entradas/Salidas</h2>
       <form onSubmit={handleSubmit}>
+        <div>
+        <p>Producto </p>
         <select value={productoId} onChange={(e) => setProductoId(e.target.value)}>
           <option value="">Selecciona un Producto</option>
           {productos.map((producto) => (
             <option key={producto.id} value={producto.id}>{producto.nombre}</option>
           ))}
-        </select>
+        </select></div>
+        <div>
+        <p>Tipo de movimiento </p>
         <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
           <option value="entrada">Entrada</option>
           <option value="salida">Salida</option>
-        </select>
-        <input type="number" placeholder="Cantidad" value={cantidad} onChange={(e) => setCantidad(e.target.value)} />
+        </select></div>
+        <div>
+        <p>Cantidad </p>
+        <input type="number" placeholder="0" value={cantidad} onChange={(e) => setCantidad(e.target.value)} />
+        </div>
         <button type="submit">Registrar Entrada/Salida</button>
       </form>
     </div>
