@@ -123,3 +123,29 @@ margin: 7% 0;
   #inventario h2{
     margin: 1.5% 0 0 0;
     }
+
+  #inventario tr{
+    width: 100%;;
+    background-color: whitesmoke;
+  }
+
+  #inventario th{
+    background-color: rgb(48, 48, 48);
+    color: white;
+    padding: 0 7px;
+    margin: 0;
+
+  }
+
+  #inventario table{
+    width: 400px;
+    margin: 1% 33%;
+    background-color: rgb(180, 180, 180);
+  }
+
+  #inventario span{
+    font-weight: bold;
+    text-decoration: underline;
+    color: green;
+    font-size: large;
+  }
