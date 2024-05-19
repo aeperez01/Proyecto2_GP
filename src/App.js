@@ -97,6 +97,7 @@ function InventarioTab({ inventario }) {
 
         ))}
       </table>
+      <span>Total de productos: {inventario.length}</span>
     </div>
   );
 }
